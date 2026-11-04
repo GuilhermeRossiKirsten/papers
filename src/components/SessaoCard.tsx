@@ -3,88 +3,62 @@ import { formatCountdown, formatDataHora, getSessionState } from "@/lib/session-
 import type { SessaoDTO } from "@/lib/types";
 import { useNow } from "./useNow";
 
+const botao = "flex min-h-11 w-full items-center justify-center rounded-full px-5 text-sm font-medium sm:w-auto";
+
 export function SessaoCard({ sessao, numero, serverNow }: { sessao: SessaoDTO; numero: number; serverNow: string }) {
   const now = useNow(serverNow);
   const inicio = new Date(sessao.inicio);
   const estado = getSessionState(inicio, sessao.duracaoMin, now);
   const titulo = sessao.titulo || `Sessão ${numero}`;
 
-  if (estado === "aovivo") {
-    return (
-      <article className="rounded-xl border-2 border-aovivo bg-white p-5 shadow-lg shadow-red-100">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <span className="pulso inline-flex items-center gap-2 rounded-full bg-aovivo px-3 py-1 text-xs font-bold uppercase tracking-wider text-white">
-              <span className="h-2 w-2 rounded-full bg-white" /> Ao vivo
-            </span>
-            <h3 className="mt-2 font-serif text-xl font-semibold">{titulo}</h3>
-            <p className="text-sm text-grafite">Começou {formatDataHora(inicio)}</p>
-          </div>
-          {sessao.linkAoVivo ? (
-            <a
-              href={sessao.linkAoVivo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-lg bg-aovivo px-6 py-3 text-lg font-bold text-white hover:bg-red-700"
-            >
-              ▶ Comece agora
-            </a>
-          ) : (
-            <span className="text-sm text-grafite">O link será publicado em instantes</span>
-          )}
-        </div>
-      </article>
-    );
-  }
+  let linha: React.ReactNode;
+  let acao: React.ReactNode = null;
 
-  if (estado === "antes") {
-    return (
-      <article className="rounded-xl border border-linha bg-white p-5">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h3 className="font-serif text-lg font-semibold">{titulo}</h3>
-            <p className="text-sm text-grafite">
-              {formatDataHora(inicio)} · {sessao.duracaoMin} min
-            </p>
-            {sessao.linkAoVivo && (
-              <a
-                href={sessao.linkAoVivo}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-grafite underline"
-              >
-                link da sessão
-              </a>
-            )}
-          </div>
-          <span className="rounded-lg bg-marca-claro px-4 py-2 text-sm font-semibold tabular-nums text-marca">
-            ⏳ {formatCountdown(inicio.getTime() - now.getTime())}
-          </span>
-        </div>
-      </article>
+  if (estado === "aovivo") {
+    linha = (
+      <span className="inline-flex items-center gap-1.5 font-medium text-aovivo">
+        <span className="pulso h-1.5 w-1.5 rounded-full bg-aovivo" /> Ao vivo
+      </span>
+    );
+    acao = sessao.linkAoVivo ? (
+      <a href={sessao.linkAoVivo} target="_blank" rel="noopener noreferrer" className={`${botao} bg-aovivo text-white hover:opacity-90`}>
+        Comece agora
+      </a>
+    ) : (
+      <span className="text-sm text-grafite">O link será publicado em instantes</span>
+    );
+  } else if (estado === "antes") {
+    linha = (
+      <>
+        <span>{formatDataHora(inicio)}</span>
+        <span className="text-tinta">{formatCountdown(inicio.getTime() - now.getTime())}</span>
+      </>
+    );
+    acao = sessao.linkAoVivo ? (
+      <a href={sessao.linkAoVivo} target="_blank" rel="noopener noreferrer" className="py-2 text-sm text-grafite underline underline-offset-4 hover:text-tinta">
+        Link da sessão
+      </a>
+    ) : null;
+  } else {
+    linha = <span>{formatDataHora(inicio)}</span>;
+    acao = sessao.gravacaoUrl ? (
+      <a href={sessao.gravacaoUrl} target="_blank" rel="noopener noreferrer" className={`${botao} border border-linha hover:border-tinta`}>
+        Assistir gravação
+      </a>
+    ) : (
+      <span className="text-sm text-grafite">Gravação em breve</span>
     );
   }
 
   return (
-    <article className="rounded-xl border border-linha bg-white/60 p-5">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h3 className="font-serif text-lg font-semibold">{titulo}</h3>
-          <p className="text-sm text-grafite">Aconteceu {formatDataHora(inicio)}</p>
+    <li className={`border-b border-linha py-5 ${estado === "depois" ? "text-grafite max-sm:order-last" : ""}`}>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
+          <h3 className={`font-medium ${estado === "depois" ? "" : "text-tinta"}`}>{titulo}</h3>
+          <p className="mt-1 flex flex-wrap gap-x-3 text-sm text-grafite">{linha}</p>
         </div>
-        {sessao.gravacaoUrl ? (
-          <a
-            href={sessao.gravacaoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-lg border border-tinta px-4 py-2 text-sm font-semibold hover:bg-tinta hover:text-papel"
-          >
-            🎬 Assistir gravação
-          </a>
-        ) : (
-          <span className="text-sm italic text-grafite">gravação em breve</span>
-        )}
+        {acao}
       </div>
-    </article>
+    </li>
   );
 }

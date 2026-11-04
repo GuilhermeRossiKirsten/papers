@@ -7,5 +7,5 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const session = await auth();
   // Não revela que a rota existe para quem não é admin.
   if (!session?.user?.isAdmin) notFound();
-  return <div className="py-10">{children}</div>;
+  return <div className="pt-2 sm:pt-6">{children}</div>;
 }

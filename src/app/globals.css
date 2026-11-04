@@ -1,15 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --color-papel: #faf7f0;
-  --color-tinta: #1d1b16;
-  --color-grafite: #57534e;
-  --color-linha: #e7e1d3;
-  --color-marca: #9a3412;
-  --color-marca-claro: #fff1e6;
-  --color-aovivo: #dc2626;
+  --color-papel: #ffffff;
+  --color-tinta: #111111;
+  --color-grafite: #737373;
+  --color-linha: #ededed;
+  --color-marca: #111111;
+  --color-marca-claro: #f5f5f5;
+  --color-aovivo: #e5484d;
 }
 
 body {
@@ -17,9 +16,14 @@ body {
   color: var(--color-tinta);
 }
 
+/* No celular a barra "ao vivo" fica fixa no rodapé: reserva espaço para não cobrir o fim da página. */
+@media (max-width: 639px) {
+  body:has(.barra-aovivo):not(:has(.hidden .barra-aovivo)) { padding-bottom: 5.5rem; }
+}
+
 @keyframes pulso {
-  0%, 100% { box-shadow: 0 0 0 0 rgb(220 38 38 / 0.55); }
-  50% { box-shadow: 0 0 0 10px rgb(220 38 38 / 0); }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
 }
 .pulso { animation: pulso 1.6s ease-in-out infinite; }
 

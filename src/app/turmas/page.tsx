@@ -2,9 +2,23 @@ import type { Metadata } from "next";
 import { TurmaCard } from "@/components/TurmaCard";
 import { getTurmaStatus } from "@/lib/turma-status";
 import { listTurmas } from "@/lib/turmas";
+import type { TurmaDTO } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Turmas" };
+
+function Lista({ turmas, now, vazio }: { turmas: TurmaDTO[]; now: Date; vazio: string }) {
+  if (turmas.length === 0) return <p className="border-t border-linha py-6 text-grafite">{vazio}</p>;
+  return (
+    <ul className="border-t border-linha">
+      {turmas.map((t) => (
+        <li key={t.id}>
+          <TurmaCard turma={t} now={now} />
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 export default async function TurmasPage() {
   const now = new Date();
@@ -13,34 +27,17 @@ export default async function TurmasPage() {
   const encerradas = turmas.filter((t) => getTurmaStatus(t.sessoes, now) === "encerrada");
 
   return (
-    <div className="py-12">
-      <h1 className="font-serif text-4xl font-semibold">Turmas</h1>
+    <div className="pt-6 sm:pt-12">
+      <h1 className="text-3xl font-semibold tracking-tight">Turmas</h1>
 
       <section className="mt-10">
-        <h2 className="mb-4 font-serif text-2xl font-semibold">Em breve e em andamento</h2>
-        {abertas.length === 0 ? (
-          <p className="text-grafite">Nenhuma turma aberta no momento.</p>
-        ) : (
-          <div className="grid gap-5 sm:grid-cols-2">
-            {abertas.map((t) => (
-              <TurmaCard key={t.id} turma={t} now={now} />
-            ))}
-          </div>
-        )}
+        <h2 className="mb-2 text-sm font-medium text-grafite">Abertas</h2>
+        <Lista turmas={abertas} now={now} vazio="Nenhuma turma aberta no momento." />
       </section>
 
-      <section id="arquivo" className="mt-14 scroll-mt-24">
-        <h2 className="mb-1 font-serif text-2xl font-semibold">Arquivo</h2>
-        <p className="mb-4 text-grafite">Turmas encerradas, com o paper debatido e as gravações.</p>
-        {encerradas.length === 0 ? (
-          <p className="text-grafite">Ainda não há turmas encerradas.</p>
-        ) : (
-          <div className="grid gap-5 sm:grid-cols-2">
-            {encerradas.map((t) => (
-              <TurmaCard key={t.id} turma={t} now={now} />
-            ))}
-          </div>
-        )}
+      <section id="arquivo" className="mt-14 scroll-mt-6">
+        <h2 className="mb-2 text-sm font-medium text-grafite">Arquivo</h2>
+        <Lista turmas={encerradas} now={now} vazio="Ainda não há turmas encerradas." />
       </section>
     </div>
   );

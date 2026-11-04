@@ -4,10 +4,10 @@ import { TurmaForm } from "@/components/admin/TurmaForm";
 export default function NovaTurmaPage() {
   return (
     <>
-      <Link href="/admin" className="text-sm text-grafite hover:text-marca">
+      <Link href="/admin" className="inline-block py-2 text-sm text-grafite hover:text-tinta">
         ← Painel
       </Link>
-      <h1 className="mb-8 mt-2 font-serif text-4xl font-semibold">Nova turma</h1>
+      <h1 className="mb-8 mt-4 text-3xl font-semibold tracking-tight">Nova turma</h1>
       <TurmaForm />
     </>
   );

@@ -124,33 +124,30 @@ export function Chat({
   }
 
   return (
-    <section className="mt-12 rounded-xl border border-linha bg-white">
-      <header className="flex items-baseline justify-between border-b border-linha px-5 py-4">
-        <h2 className="font-serif text-2xl font-semibold">Discussão da turma</h2>
-        <span className="text-xs text-grafite">atualiza automaticamente</span>
-      </header>
+    <section className="mt-10 sm:mt-14">
+      <h2 className="mb-2 text-sm font-medium text-grafite">Discussão</h2>
 
-      <div ref={lista} onScroll={aoRolar} className="h-[28rem] space-y-4 overflow-y-auto px-5 py-4">
+      <div ref={lista} onScroll={aoRolar} className="h-[55vh] max-h-[32rem] min-h-64 space-y-5 overflow-y-auto overscroll-contain border-y border-linha py-5 sm:h-[28rem]">
         {temMais && (
           <div className="text-center">
-            <button onClick={carregarAntigas} disabled={carregandoAntigas} className="text-sm text-marca hover:underline disabled:opacity-50">
-              {carregandoAntigas ? "carregando…" : "ver mensagens mais antigas"}
+            <button onClick={carregarAntigas} disabled={carregandoAntigas} className="py-2 text-sm text-grafite underline underline-offset-4 hover:text-tinta disabled:opacity-50">
+              {carregandoAntigas ? "carregando…" : "Ver mensagens anteriores"}
             </button>
           </div>
         )}
         {mensagens.length === 0 && (
-          <p className="py-16 text-center text-grafite">Ninguém comentou ainda. Compartilhe a primeira ideia!</p>
+          <p className="py-16 text-center text-sm text-grafite">Nenhuma mensagem ainda. Compartilhe a primeira ideia.</p>
         )}
         {mensagens.map((m) => (
           <article key={m.id} className="group flex gap-3">
             {m.avatarUrl ? (
-              <img src={m.avatarUrl} alt="" className="h-9 w-9 shrink-0 rounded-full border border-linha" />
+              <img src={m.avatarUrl} alt="" className="h-8 w-8 shrink-0 rounded-full" />
             ) : (
-              <span className="h-9 w-9 shrink-0 rounded-full bg-linha" />
+              <span className="h-8 w-8 shrink-0 rounded-full bg-linha" />
             )}
             <div className="min-w-0 flex-1">
               <div className="flex items-baseline gap-2 text-sm">
-                <a href={`https://github.com/${m.login}`} target="_blank" rel="noopener noreferrer" className="font-semibold hover:underline">
+                <a href={`https://github.com/${m.login}`} target="_blank" rel="noopener noreferrer" className="font-medium hover:underline">
                   @{m.login}
                 </a>
                 <time dateTime={m.criadoEm} className="text-xs text-grafite" suppressHydrationWarning>
@@ -159,49 +156,49 @@ export function Chat({
                 {podeApagar(m, usuario) && (
                   <button
                     onClick={() => apagar(m.id)}
-                    className="ml-auto text-xs text-grafite opacity-0 hover:text-red-700 focus:opacity-100 group-hover:opacity-100"
+                    className="-my-2 ml-auto px-2 py-2 text-xs text-grafite hover:text-aovivo focus:opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
                   >
                     apagar
                   </button>
                 )}
               </div>
-              <p className="whitespace-pre-wrap break-words text-[15px] leading-relaxed">{m.texto}</p>
+              <p className="mt-0.5 whitespace-pre-wrap break-words leading-relaxed">{m.texto}</p>
             </div>
           </article>
         ))}
       </div>
 
-      <footer className="border-t border-linha p-4">
+      <footer className="pt-4">
         {usuario ? (
           <form onSubmit={enviar}>
             <textarea
               value={texto}
               onChange={(e) => setTexto(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
+                if (e.key === "Enter" && !e.shiftKey && window.matchMedia("(pointer: fine)").matches) {
                   e.preventDefault();
                   enviar();
                 }
               }}
               maxLength={LIMITE_TEXTO}
               rows={2}
-              placeholder="Compartilhe uma ideia, dúvida ou interpretação… (Enter envia, Shift+Enter quebra linha)"
-              className="w-full resize-none rounded-md border border-linha px-3 py-2 text-sm focus:border-marca focus:outline-none"
+              placeholder="Compartilhe uma ideia, dúvida ou interpretação…"
+              className="w-full resize-none rounded-2xl border border-linha px-4 py-3 text-base focus:border-tinta focus:outline-none sm:text-sm"
             />
             <div className="mt-2 flex items-center justify-between gap-3">
               <span className="text-xs text-grafite">
-                {erro ? <span className="text-red-700">{erro}</span> : `${texto.length}/${LIMITE_TEXTO}`}
+                {erro ? <span className="text-aovivo">{erro}</span> : texto.length > LIMITE_TEXTO * 0.8 ? `${texto.length}/${LIMITE_TEXTO}` : ""}
               </span>
               <button
                 disabled={enviando || !texto.trim()}
-                className="rounded-lg bg-marca px-4 py-2 text-sm font-semibold text-white hover:bg-orange-900 disabled:opacity-50"
+                className="flex min-h-11 items-center rounded-full bg-tinta px-5 text-sm font-medium text-white hover:opacity-85 disabled:opacity-30"
               >
                 {enviando ? "Enviando…" : "Enviar"}
               </button>
             </div>
           </form>
         ) : (
-          <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-grafite">Entre com sua conta do GitHub para participar da discussão.</p>
             {entrar}
           </div>
