@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --color-papel: #faf7f0;
+  --color-tinta: #1d1b16;
+  --color-grafite: #57534e;
+  --color-linha: #e7e1d3;
+  --color-marca: #9a3412;
+  --color-marca-claro: #fff1e6;
+  --color-aovivo: #dc2626;
+}
+
+body {
+  background: var(--color-papel);
+  color: var(--color-tinta);
+}
+
+@keyframes pulso {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(220 38 38 / 0.55); }
+  50% { box-shadow: 0 0 0 10px rgb(220 38 38 / 0); }
+}
+.pulso { animation: pulso 1.6s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pulso { animation: none; }
+}
