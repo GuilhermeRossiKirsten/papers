@@ -15,12 +15,12 @@ export default async function AdminPage() {
 
   return (
     <>
-      <h1 className="text-3xl font-semibold tracking-tight">Admin</h1>
+      <h1 className="font-serif text-3xl font-semibold tracking-tight">Admin</h1>
 
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
         <Link
           href="/admin/turmas/nova"
-          className="flex min-h-12 items-center justify-center rounded-full bg-tinta px-6 text-sm font-medium text-white hover:opacity-85"
+          className="flex min-h-12 items-center justify-center rounded-full bg-marca px-6 text-sm font-medium text-white hover:bg-orange-900"
         >
           Nova turma
         </Link>

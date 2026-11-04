@@ -20,12 +20,12 @@ export default async function Home() {
       <LiveBanner candidatas={liveCandidates(turmas, now)} serverNow={now.toISOString()} />
 
       <section className="pt-10 pb-16 sm:pt-20 sm:pb-24">
-        <h1 className="text-[2rem] font-semibold leading-[1.15] tracking-tight sm:text-5xl">{sobre.slogan}</h1>
+        <h1 className="font-serif text-[2rem] font-semibold leading-[1.15] tracking-tight sm:text-5xl">{sobre.slogan}</h1>
         <p className="mt-6 text-base leading-relaxed text-grafite sm:text-lg">{primeiro}</p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <Link
             href="/turmas"
-            className="flex min-h-12 items-center justify-center rounded-full bg-tinta px-6 text-sm font-medium text-white hover:opacity-85"
+            className="flex min-h-12 items-center justify-center rounded-full bg-marca px-6 text-sm font-medium text-white hover:bg-orange-900"
           >
             {sobre.ctaTurmas}
           </Link>
@@ -40,8 +40,8 @@ export default async function Home() {
 
       <section className="pb-16">
         <div className="mb-2 flex items-baseline justify-between">
-          <h2 className="text-sm font-medium text-grafite">Próximas turmas</h2>
-          <Link href="/turmas" className="py-2 text-sm text-grafite hover:text-tinta">
+          <h2 className="font-serif text-xl font-semibold">Próximas turmas</h2>
+          <Link href="/turmas" className="py-2 text-sm text-marca hover:underline">
             Ver todas
           </Link>
         </div>
@@ -62,17 +62,17 @@ export default async function Home() {
         {resto.map((p) => (
           <p key={p}>{p}</p>
         ))}
-        <p className="pt-4 text-xl font-medium leading-snug text-tinta sm:text-2xl">{sobre.destaque}</p>
+        <p className="border-l-2 border-marca pl-4 font-serif text-xl italic leading-snug text-tinta sm:text-2xl">{sobre.destaque}</p>
       </section>
 
       <section className="border-t border-linha py-16">
-        <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">{sobre.passosTitulo}</h2>
+        <h2 className="font-serif text-2xl font-semibold sm:text-3xl">{sobre.passosTitulo}</h2>
         <ol className="mt-8 space-y-8">
           {sobre.passos.map((p, i) => (
             <li key={p.titulo} className="grid grid-cols-[2.5rem_1fr] gap-2">
-              <span className="text-sm tabular-nums text-grafite">{String(i + 1).padStart(2, "0")}</span>
+              <span className="font-serif text-lg tabular-nums text-marca">{String(i + 1).padStart(2, "0")}</span>
               <div>
-                <h3 className="font-medium">{p.titulo}</h3>
+                <h3 className="font-serif text-lg font-semibold">{p.titulo}</h3>
                 <p className="mt-1 leading-relaxed text-grafite">{p.texto}</p>
               </div>
             </li>

@@ -8,7 +8,7 @@ export async function Header() {
   const user = session?.user;
   return (
     <header className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-5 py-5 sm:px-6 sm:py-8">
-      <Link href="/" className="py-2 font-semibold tracking-tight">
+      <Link href="/" className="py-2 font-serif text-xl font-semibold tracking-tight">
         {sobre.nome}
       </Link>
       <nav className="flex items-center gap-4 text-sm text-grafite sm:gap-6">

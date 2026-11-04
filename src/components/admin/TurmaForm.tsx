@@ -196,7 +196,7 @@ export function TurmaForm({ turma }: { turma?: TurmaDTO }) {
       {msg && <p className="rounded-xl bg-marca-claro p-3 text-sm">{msg}</p>}
 
       <div className="flex flex-col gap-4 border-t border-linha pt-8 sm:flex-row sm:items-center sm:justify-between">
-        <button disabled={pending} className="flex min-h-12 items-center justify-center rounded-full bg-tinta px-6 text-sm font-medium text-white hover:opacity-85 disabled:opacity-40">
+        <button disabled={pending} className="flex min-h-12 items-center justify-center rounded-full bg-marca px-6 text-sm font-medium text-white hover:bg-orange-900 disabled:opacity-40">
           {pending ? "Salvando…" : turma ? "Salvar alterações" : "Criar turma"}
         </button>
         {turma && (

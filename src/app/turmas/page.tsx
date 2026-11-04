@@ -28,15 +28,15 @@ export default async function TurmasPage() {
 
   return (
     <div className="pt-6 sm:pt-12">
-      <h1 className="text-3xl font-semibold tracking-tight">Turmas</h1>
+      <h1 className="font-serif text-3xl font-semibold tracking-tight">Turmas</h1>
 
       <section className="mt-10">
-        <h2 className="mb-2 text-sm font-medium text-grafite">Abertas</h2>
+        <h2 className="mb-3 font-serif text-xl font-semibold">Abertas</h2>
         <Lista turmas={abertas} now={now} vazio="Nenhuma turma aberta no momento." />
       </section>
 
       <section id="arquivo" className="mt-14 scroll-mt-6">
-        <h2 className="mb-2 text-sm font-medium text-grafite">Arquivo</h2>
+        <h2 className="mb-3 font-serif text-xl font-semibold">Arquivo</h2>
         <Lista turmas={encerradas} now={now} vazio="Ainda não há turmas encerradas." />
       </section>
     </div>

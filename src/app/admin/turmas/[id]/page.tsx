@@ -15,7 +15,7 @@ export default async function EditarTurmaPage({ params }: { params: Promise<{ id
         ← Painel
       </Link>
       <div className="mb-8 mt-4 flex flex-wrap items-baseline justify-between gap-x-4">
-        <h1 className="text-3xl font-semibold tracking-tight">Editar turma</h1>
+        <h1 className="font-serif text-3xl font-semibold tracking-tight">Editar turma</h1>
         <Link href={`/turmas/${turma.slug}`} className="py-2 text-sm text-grafite underline underline-offset-4 hover:text-tinta">
           ver página pública →
         </Link>

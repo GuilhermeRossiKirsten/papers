@@ -31,7 +31,7 @@ export function SessaoCard({ sessao, numero, serverNow }: { sessao: SessaoDTO; n
     linha = (
       <>
         <span>{formatDataHora(inicio)}</span>
-        <span className="text-tinta">{formatCountdown(inicio.getTime() - now.getTime())}</span>
+        <span className="font-medium text-marca">{formatCountdown(inicio.getTime() - now.getTime())}</span>
       </>
     );
     acao = sessao.linkAoVivo ? (
@@ -54,7 +54,7 @@ export function SessaoCard({ sessao, numero, serverNow }: { sessao: SessaoDTO; n
     <li className={`border-b border-linha py-5 ${estado === "depois" ? "text-grafite max-sm:order-last" : ""}`}>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0">
-          <h3 className={`font-medium ${estado === "depois" ? "" : "text-tinta"}`}>{titulo}</h3>
+          <h3 className={`font-serif text-lg font-semibold ${estado === "depois" ? "" : "text-tinta"}`}>{titulo}</h3>
           <p className="mt-1 flex flex-wrap gap-x-3 text-sm text-grafite">{linha}</p>
         </div>
         {acao}

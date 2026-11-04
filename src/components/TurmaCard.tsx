@@ -16,8 +16,8 @@ export function TurmaCard({ turma, now, inscritos }: { turma: TurmaDTO; now: Dat
     <Link href={`/turmas/${turma.slug}`} className="group block border-b border-linha py-5 active:bg-marca-claro">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <h3 className="font-medium leading-snug group-hover:underline group-hover:underline-offset-4">{turma.titulo}</h3>
-          <p className="mt-1 truncate text-sm text-grafite">{turma.paper.titulo}</p>
+          <h3 className="font-serif text-lg font-semibold leading-snug group-hover:text-marca">{turma.titulo}</h3>
+          <p className="mt-1 truncate text-sm italic text-grafite">{turma.paper.titulo}</p>
           <p className="mt-2 text-xs text-grafite">{meta.join(" · ")}</p>
         </div>
         <span className="shrink-0 pt-0.5 text-xs text-grafite">

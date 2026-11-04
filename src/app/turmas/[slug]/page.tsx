@@ -69,7 +69,7 @@ export default async function TurmaPage({ params }: Props) {
             </Link>
           )}
         </p>
-        <h1 className="mt-2 text-[1.75rem] font-semibold leading-tight tracking-tight sm:text-4xl">{turma.titulo}</h1>
+        <h1 className="font-serif mt-2 text-[1.75rem] font-semibold leading-tight tracking-tight sm:text-4xl">{turma.titulo}</h1>
       </header>
 
       {turma.descricao && (
@@ -79,14 +79,14 @@ export default async function TurmaPage({ params }: Props) {
       )}
 
       <section className="order-5 mt-10 border-t border-linha pt-6 sm:order-3 sm:mt-10">
-        <h2 className="text-sm font-medium text-grafite">{turma.paper.origem === "proprio" ? "Paper autoral" : "Paper"}</h2>
-        <p className="mt-2 font-medium">{turma.paper.titulo}</p>
+        <h2 className="font-serif text-xl font-semibold">{turma.paper.origem === "proprio" ? "Paper autoral" : "Paper"}</h2>
+        <p className="mt-2 font-serif text-lg">{turma.paper.titulo}</p>
         {turma.paper.autores && <p className="text-sm text-grafite">{turma.paper.autores}</p>}
         <a
           href={turma.paper.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-3 inline-block py-1 text-sm underline underline-offset-4 hover:text-grafite"
+          className="mt-3 inline-block py-1 text-sm font-medium text-marca hover:underline"
         >
           Ler o paper ↗
         </a>
@@ -103,7 +103,7 @@ export default async function TurmaPage({ params }: Props) {
                   Inscrito · cancelar
                 </button>
               ) : (
-                <button className="flex min-h-12 w-full items-center justify-center rounded-full bg-tinta px-6 text-sm font-medium text-white hover:opacity-85 sm:w-auto">
+                <button className="flex min-h-12 w-full items-center justify-center rounded-full bg-marca px-6 text-sm font-medium text-white hover:bg-orange-900 sm:w-auto">
                   Quero participar
                 </button>
               )}
@@ -115,7 +115,7 @@ export default async function TurmaPage({ params }: Props) {
       )}
 
       <section className="order-7 mt-10 border-t border-linha pt-6 sm:order-4 sm:mt-6 sm:border-0 sm:pt-0">
-        <h2 className="text-sm font-medium text-grafite sm:sr-only">Inscritos ({inscritos.length})</h2>
+        <h2 className="font-serif text-xl font-semibold sm:sr-only">Inscritos ({inscritos.length})</h2>
         {inscritos.length > 0 ? (
           <div className="mt-3 flex items-center gap-3">
             <ul className="flex flex-wrap -space-x-2">
@@ -137,7 +137,7 @@ export default async function TurmaPage({ params }: Props) {
       </section>
 
       <section className="order-3 mt-10 sm:order-5 sm:mt-14">
-        <h2 className="mb-2 text-sm font-medium text-grafite">Sessões</h2>
+        <h2 className="mb-3 font-serif text-xl font-semibold">Sessões</h2>
         {turma.sessoes.length === 0 ? (
           <p className="border-t border-linha py-6 text-grafite">As datas serão divulgadas em breve.</p>
         ) : (

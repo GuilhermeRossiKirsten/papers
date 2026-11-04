@@ -125,7 +125,7 @@ export function Chat({
 
   return (
     <section className="mt-10 sm:mt-14">
-      <h2 className="mb-2 text-sm font-medium text-grafite">Discussão</h2>
+      <h2 className="mb-3 font-serif text-xl font-semibold">Discussão da turma</h2>
 
       <div ref={lista} onScroll={aoRolar} className="h-[55vh] max-h-[32rem] min-h-64 space-y-5 overflow-y-auto overscroll-contain border-y border-linha py-5 sm:h-[28rem]">
         {temMais && (
@@ -191,7 +191,7 @@ export function Chat({
               </span>
               <button
                 disabled={enviando || !texto.trim()}
-                className="flex min-h-11 items-center rounded-full bg-tinta px-5 text-sm font-medium text-white hover:opacity-85 disabled:opacity-30"
+                className="flex min-h-11 items-center rounded-full bg-marca px-5 text-sm font-medium text-white hover:bg-orange-900 disabled:opacity-30"
               >
                 {enviando ? "Enviando…" : "Enviar"}
               </button>
