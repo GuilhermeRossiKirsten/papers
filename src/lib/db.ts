@@ -9,10 +9,10 @@ export function getDb(): Promise<Db> {
   if (!cache.promise) {
     const uri = process.env.MONGODB_URI;
     if (!uri) throw new Error("MONGODB_URI não configurada");
-    cache.client = new MongoClient(uri, { appName: "clube-do-paper" });
+    cache.client = new MongoClient(uri, { appName: "openpapers" });
     cache.promise = cache.client
       .connect()
-      .then((c) => c.db(process.env.MONGODB_DB || "clube-do-paper"))
+      .then((c) => c.db(process.env.MONGODB_DB || "openpapers"))
       .catch((err) => {
         cache.promise = undefined;
         throw err;
@@ -22,6 +22,8 @@ export function getDb(): Promise<Db> {
     cache.indexes ??= Promise.all([
       db.collection("turmas").createIndex({ slug: 1 }, { unique: true }),
       db.collection("inscricoes").createIndex({ turmaId: 1, githubId: 1 }, { unique: true }),
+      db.collection("mensagens").createIndex({ turmaId: 1, _id: -1 }),
+      db.collection("mensagens").createIndex({ githubId: 1, _id: -1 }),
     ]).catch((err) => {
       cache.indexes = undefined;
       throw err;

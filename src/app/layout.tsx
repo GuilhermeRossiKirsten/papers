@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main className="mx-auto max-w-5xl px-5 pb-24">{children}</main>
         <footer className="border-t border-linha py-8 text-center text-sm text-grafite">
-          {sobre.nome} · feito com café e PDFs
+          {sobre.nome} · {sobre.lema}
         </footer>
       </body>
     </html>

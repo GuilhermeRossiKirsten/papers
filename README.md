@@ -1,6 +1,6 @@
-# Clube do Paper
+# OpenPapers
 
-Site do Clube do Paper: apresentação, turmas com sessões ao vivo (contador → **AO VIVO / Comece agora** → gravação), inscrição com GitHub e painel admin.
+Site do OpenPapers: apresentação, turmas com sessões ao vivo (contador → **AO VIVO / Comece agora** → gravação), inscrição com GitHub e painel admin.
 
 Stack: Next.js 16 · Auth.js (GitHub) · MongoDB · Tailwind. Roda no plano gratuito da Vercel.
 
@@ -21,7 +21,7 @@ Stack: Next.js 16 · Auth.js (GitHub) · MongoDB · Tailwind. Roda no plano grat
 | `AUTH_GITHUB_ID` | Client ID do OAuth App |
 | `AUTH_GITHUB_SECRET` | Client Secret do OAuth App |
 | `MONGODB_URI` | já preenchida pela integração MongoDB da Vercel |
-| `MONGODB_DB` | opcional, padrão `clube-do-paper` |
+| `MONGODB_DB` | opcional, padrão `openpapers` |
 | `ADMIN_GITHUB_LOGINS` | logins com acesso ao `/admin`, separados por vírgula. Ex.: `guirossi,fulana` |
 
 **Para adicionar/remover admins:** edite `ADMIN_GITHUB_LOGINS` e faça um redeploy. A checagem é feita no servidor em toda ação de admin — esconder o botão não é a única proteção.
@@ -49,3 +49,12 @@ npm test                     # testes de lógica
 - **Depois:** botão da gravação, ou "gravação em breve".
 
 A troca de estado acontece sozinha no navegador, sem recarregar.
+
+## Discussão da turma (chat)
+
+- Cada turma tem seu próprio chat, no fim da página da turma.
+- Qualquer visitante lê; para enviar é preciso estar logado com GitHub.
+- Atualiza a cada 4 segundos (sem WebSocket — funciona no plano gratuito da Vercel).
+- Mensagens de até 1000 caracteres, texto simples; no máximo 1 mensagem a cada 3 segundos por pessoa.
+- Cada pessoa pode apagar as próprias mensagens; admins podem apagar qualquer uma.
+- Mostra as 100 mais recentes, com "ver mensagens mais antigas".

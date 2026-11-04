@@ -52,7 +52,7 @@ export function mockTurmas(now: Date): MockTurma[] {
       descricao: "Turma de exemplo encerrada, com paper de autoria própria e gravações no arquivo.",
       publicada: true,
       mock: true,
-      paper: { titulo: "Um estudo do Clube do Paper", autores: "Clube do Paper", origem: "proprio", url: "https://github.com/" },
+      paper: { titulo: "Um estudo do OpenPapers", autores: "Comunidade OpenPapers", origem: "proprio", url: "https://github.com/" },
       sessoes: [
         sessao(-20 * DIA, { gravacaoUrl: "https://www.youtube.com/" }),
         sessao(-18 * DIA), // sem gravação: mostra "gravação em breve"

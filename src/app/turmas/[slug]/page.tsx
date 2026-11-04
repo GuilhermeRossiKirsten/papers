@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { auth, signIn } from "@/auth";
+import { Chat } from "@/components/Chat";
 import { GitHubButton } from "@/components/GitHubButton";
 import { LiveBanner } from "@/components/LiveBanner";
 import { SessaoCard } from "@/components/SessaoCard";
 import { liveCandidates } from "@/lib/live";
+import { listMensagens } from "@/lib/mensagens";
 import { getTurmaStatus, STATUS_LABEL } from "@/lib/turma-status";
-import { getTurmaBySlug, listInscritos } from "@/lib/turmas";
+import { getTurmaBySlug, listInscritos, parseObjectId } from "@/lib/turmas";
 import { cancelarInscricao, inscrever } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -31,6 +33,7 @@ export default async function TurmaPage({ params }: Props) {
   const inscritos = await listInscritos(turma.id);
   const inscrito = !!user && inscritos.some((i) => i.githubId === user.githubId);
   const status = getTurmaStatus(turma.sessoes, now);
+  const chat = await listMensagens(parseObjectId(turma.id)!);
 
   return (
     <div className="py-10">
@@ -56,7 +59,7 @@ export default async function TurmaPage({ params }: Props) {
 
       <section className="mt-8 rounded-xl border border-linha bg-white p-6">
         <p className="text-xs font-semibold uppercase tracking-widest text-grafite">
-          {turma.paper.origem === "proprio" ? "Paper do clube" : "Paper"}
+          {turma.paper.origem === "proprio" ? "Paper autoral do OpenPapers" : "Paper"}
         </p>
         <h2 className="mt-1 font-serif text-2xl font-semibold">{turma.paper.titulo}</h2>
         {turma.paper.autores && <p className="text-grafite">{turma.paper.autores}</p>}
@@ -122,6 +125,23 @@ export default async function TurmaPage({ params }: Props) {
           </ul>
         </aside>
       </div>
+
+      <Chat
+        turmaId={turma.id}
+        usuario={user ? { githubId: user.githubId, login: user.login, isAdmin: user.isAdmin } : null}
+        iniciais={chat.mensagens}
+        temMaisInicial={chat.temMais}
+        entrar={
+          <form
+            action={async () => {
+              "use server";
+              await signIn("github", { redirectTo: `/turmas/${slug}` });
+            }}
+          >
+            <GitHubButton>Entrar com GitHub</GitHubButton>
+          </form>
+        }
+      />
     </div>
   );
 }

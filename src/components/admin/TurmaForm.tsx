@@ -137,7 +137,7 @@ export function TurmaForm({ turma }: { turma?: TurmaDTO }) {
               id="purl"
               type="url"
               className={input}
-              placeholder={paper.origem === "proprio" ? "https://github.com/clube/papers/blob/main/x.pdf" : "https://arxiv.org/abs/..."}
+              placeholder={paper.origem === "proprio" ? "https://github.com/openpapers/papers/blob/main/x.pdf" : "https://arxiv.org/abs/..."}
               value={paper.url}
               onChange={(e) => setPaper({ ...paper, url: e.target.value })}
               required

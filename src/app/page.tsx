@@ -12,7 +12,6 @@ export default async function Home() {
   const now = new Date();
   const turmas = await listTurmas();
   const abertas = turmas.filter((t) => getTurmaStatus(t.sessoes, now) !== "encerrada");
-  const encerradas = turmas.filter((t) => getTurmaStatus(t.sessoes, now) === "encerrada");
   const contagem = await countInscritos(abertas.map((t) => t.id));
 
   return (
@@ -20,31 +19,41 @@ export default async function Home() {
       <LiveBanner candidatas={liveCandidates(turmas, now)} serverNow={now.toISOString()} />
 
       <section className="py-16 sm:py-24">
-        <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-marca">Clube de leitura de papers</p>
-        <h1 className="max-w-3xl font-serif text-5xl font-semibold leading-tight tracking-tight sm:text-6xl">
+        <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-marca">{sobre.nome}</p>
+        <h1 className="max-w-4xl font-serif text-5xl font-semibold leading-tight tracking-tight sm:text-6xl">
           {sobre.slogan}
         </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-grafite">{sobre.intro}</p>
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="mt-8 max-w-2xl space-y-4 text-lg leading-relaxed text-grafite">
+          {sobre.intro.map((p) => (
+            <p key={p}>{p}</p>
+          ))}
+        </div>
+        <blockquote className="mt-8 max-w-2xl border-l-4 border-marca pl-5 font-serif text-2xl italic leading-snug">
+          {sobre.destaque}
+        </blockquote>
+        <div className="mt-10 flex flex-wrap gap-3">
           <Link href="/turmas" className="rounded-lg bg-marca px-5 py-3 font-semibold text-white hover:bg-orange-900">
-            Ver turmas
+            {sobre.ctaTurmas}
           </Link>
-          {encerradas.length > 0 && (
-            <Link href="/turmas#arquivo" className="rounded-lg border border-tinta px-5 py-3 font-semibold hover:bg-tinta hover:text-papel">
-              Assistir gravações
-            </Link>
-          )}
+          <Link href="/turmas#arquivo" className="rounded-lg border border-tinta px-5 py-3 font-semibold hover:bg-tinta hover:text-papel">
+            {sobre.ctaArquivo}
+          </Link>
         </div>
       </section>
 
-      <section className="grid gap-6 border-y border-linha py-12 sm:grid-cols-3">
-        {sobre.passos.map((p, i) => (
-          <div key={p.titulo}>
-            <span className="font-serif text-4xl text-marca">{i + 1}.</span>
-            <h2 className="mt-2 font-serif text-xl font-semibold">{p.titulo}</h2>
-            <p className="mt-1 text-grafite">{p.texto}</p>
-          </div>
-        ))}
+      <section className="border-y border-linha py-14">
+        <h2 className="mb-8 font-serif text-3xl font-semibold">{sobre.passosTitulo}</h2>
+        <div className="grid gap-8 sm:grid-cols-3">
+          {sobre.passos.map((p, i) => (
+            <div key={p.titulo}>
+              <span className="font-serif text-4xl text-marca">{String(i + 1).padStart(2, "0")}.</span>
+              <h3 className="mt-2 font-serif text-xl font-semibold">{p.titulo}</h3>
+              <p className="mt-2 leading-relaxed text-grafite">{p.texto}</p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-10 max-w-2xl text-lg text-grafite">{sobre.passosFechamento}</p>
+        <p className="mt-6 font-serif text-xl font-semibold">{sobre.lema}</p>
       </section>
 
       <section className="py-12">

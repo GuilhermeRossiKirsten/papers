@@ -66,6 +66,7 @@ export async function excluirTurma(id: string): Promise<SalvarResultado | { ok: 
   const db = await getDb();
   await db.collection("turmas").deleteOne({ _id: oid });
   await db.collection("inscricoes").deleteMany({ turmaId: oid });
+  await db.collection("mensagens").deleteMany({ turmaId: oid });
   revalidatePath("/", "layout");
   return { ok: true };
 }
@@ -82,13 +83,14 @@ export async function criarMock(): Promise<void> {
   revalidatePath("/", "layout");
 }
 
-/** Remove todas as turmas de exemplo (e suas inscrições). */
+/** Remove todas as turmas de exemplo (e suas inscrições e mensagens). */
 export async function removerMock(): Promise<void> {
   await requireAdmin();
   const db = await getDb();
   const ids = (await db.collection<TurmaDoc>("turmas").find({ mock: true }, { projection: { _id: 1 } }).toArray()).map((t) => t._id);
   if (ids.length) {
     await db.collection("inscricoes").deleteMany({ turmaId: { $in: ids } });
+    await db.collection("mensagens").deleteMany({ turmaId: { $in: ids } });
     await db.collection("turmas").deleteMany({ _id: { $in: ids } });
   }
   revalidatePath("/", "layout");
