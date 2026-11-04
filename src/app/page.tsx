@@ -30,7 +30,7 @@ export default async function Home() {
             {sobre.ctaTurmas}
           </Link>
           <Link
-            href="/turmas#arquivo"
+            href="/turmas#openarchive"
             className="flex min-h-12 items-center justify-center rounded-full border border-linha px-6 text-sm font-medium hover:border-tinta"
           >
             {sobre.ctaArquivo}
@@ -58,7 +58,7 @@ export default async function Home() {
         )}
       </section>
 
-      <section className="space-y-5 border-t border-linha py-16 text-base leading-relaxed text-grafite sm:text-lg">
+      <section className="space-y-5 pb-16 text-base leading-relaxed text-grafite sm:text-lg">
         {resto.map((p) => (
           <p key={p}>{p}</p>
         ))}

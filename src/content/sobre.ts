@@ -11,7 +11,7 @@ export const sobre = {
   ],
   destaque: "Uma pesquisa pode começar com um autor. O conhecimento cresce quando todos participam.",
   ctaTurmas: "Descobrir as turmas",
-  ctaArquivo: "Explorar o arquivo",
+  ctaArquivo: "Explorar o OpenArchive",
   passosTitulo: "Como fazemos isso?",
   passos: [
     {

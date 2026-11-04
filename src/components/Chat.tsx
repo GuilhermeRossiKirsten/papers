@@ -127,7 +127,7 @@ export function Chat({
     <section className="mt-10 sm:mt-14">
       <h2 className="mb-3 font-serif text-xl font-semibold">Discussão da turma</h2>
 
-      <div ref={lista} onScroll={aoRolar} className="h-[55vh] max-h-[32rem] min-h-64 space-y-5 overflow-y-auto overscroll-contain border-y border-linha py-5 sm:h-[28rem]">
+      <div ref={lista} onScroll={aoRolar} className="max-h-[60vh] space-y-5 overflow-y-auto overscroll-contain border-y border-linha py-5 sm:max-h-[32rem]">
         {temMais && (
           <div className="text-center">
             <button onClick={carregarAntigas} disabled={carregandoAntigas} className="py-2 text-sm text-grafite underline underline-offset-4 hover:text-tinta disabled:opacity-50">
@@ -136,7 +136,7 @@ export function Chat({
           </div>
         )}
         {mensagens.length === 0 && (
-          <p className="py-16 text-center text-sm text-grafite">Nenhuma mensagem ainda. Compartilhe a primeira ideia.</p>
+          <p className="py-2 text-sm text-grafite">Nenhuma mensagem ainda. Compartilhe a primeira ideia.</p>
         )}
         {mensagens.map((m) => (
           <article key={m.id} className="group flex gap-3">

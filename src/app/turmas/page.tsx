@@ -35,8 +35,8 @@ export default async function TurmasPage() {
         <Lista turmas={abertas} now={now} vazio="Nenhuma turma aberta no momento." />
       </section>
 
-      <section id="arquivo" className="mt-14 scroll-mt-6">
-        <h2 className="mb-3 font-serif text-xl font-semibold">Arquivo</h2>
+      <section id="openarchive" className="mt-14 scroll-mt-6">
+        <h2 className="mb-3 font-serif text-xl font-semibold">OpenArchive</h2>
         <Lista turmas={encerradas} now={now} vazio="Ainda não há turmas encerradas." />
       </section>
     </div>

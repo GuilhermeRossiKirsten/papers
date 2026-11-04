@@ -49,7 +49,7 @@ export function mockTurmas(now: Date): MockTurma[] {
     },
     {
       titulo: "[Mock] Nosso primeiro paper",
-      descricao: "Turma de exemplo encerrada, com paper de autoria própria e gravações no arquivo.",
+      descricao: "Turma de exemplo encerrada, com paper de autoria própria e gravações no OpenArchive.",
       publicada: true,
       mock: true,
       paper: { titulo: "Um estudo do OpenPapers", autores: "Comunidade OpenPapers", origem: "proprio", url: "https://github.com/" },
