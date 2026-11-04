@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import { revalidatePath } from "next/cache";
 import { getDb } from "@/lib/db";
 import { requireAdmin } from "@/lib/guards";
+import { mockTurmas } from "@/lib/mock";
 import { slugify, turmaInputSchema } from "@/lib/schemas";
 import { parseObjectId } from "@/lib/turmas";
 import type { TurmaDoc } from "@/lib/types";
@@ -67,4 +68,28 @@ export async function excluirTurma(id: string): Promise<SalvarResultado | { ok: 
   await db.collection("inscricoes").deleteMany({ turmaId: oid });
   revalidatePath("/", "layout");
   return { ok: true };
+}
+
+/** Cria 3 turmas de exemplo (ao vivo, em breve, encerrada) para visualizar a interface. */
+export async function criarMock(): Promise<void> {
+  await requireAdmin();
+  const col = (await getDb()).collection<TurmaDoc>("turmas");
+  const agora = new Date();
+  for (const t of mockTurmas(agora)) {
+    const slug = await slugDisponivel(slugify(t.titulo));
+    await col.insertOne({ ...t, slug, criadoEm: agora, atualizadoEm: agora } as TurmaDoc);
+  }
+  revalidatePath("/", "layout");
+}
+
+/** Remove todas as turmas de exemplo (e suas inscrições). */
+export async function removerMock(): Promise<void> {
+  await requireAdmin();
+  const db = await getDb();
+  const ids = (await db.collection<TurmaDoc>("turmas").find({ mock: true }, { projection: { _id: 1 } }).toArray()).map((t) => t._id);
+  if (ids.length) {
+    await db.collection("inscricoes").deleteMany({ turmaId: { $in: ids } });
+    await db.collection("turmas").deleteMany({ _id: { $in: ids } });
+  }
+  revalidatePath("/", "layout");
 }

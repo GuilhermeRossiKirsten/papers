@@ -3,6 +3,7 @@ import Link from "next/link";
 import { formatDataHora } from "@/lib/session-state";
 import { getTurmaStatus, proximaSessao, STATUS_LABEL } from "@/lib/turma-status";
 import { countInscritos, listTurmas } from "@/lib/turmas";
+import { criarMock, removerMock } from "./actions";
 
 export const metadata: Metadata = { title: "Admin" };
 
@@ -10,14 +11,30 @@ export default async function AdminPage() {
   const now = new Date();
   const turmas = await listTurmas({ incluirRascunhos: true });
   const contagem = await countInscritos(turmas.map((t) => t.id));
+  const temMock = turmas.some((t) => t.mock);
 
   return (
     <>
       <div className="flex flex-wrap items-center justify-between gap-4">
         <h1 className="font-serif text-4xl font-semibold">Painel admin</h1>
-        <Link href="/admin/turmas/nova" className="rounded-lg bg-marca px-4 py-2 font-semibold text-white hover:bg-orange-900">
-          + Nova turma
-        </Link>
+        <div className="flex flex-wrap items-center gap-2">
+          {temMock && (
+            <form action={removerMock}>
+              <button className="rounded-lg px-3 py-2 text-sm text-red-700 hover:underline">Remover mocks</button>
+            </form>
+          )}
+          <form action={criarMock}>
+            <button
+              title="Cria 3 turmas de exemplo (ao vivo, em breve e encerrada) para visualizar a interface"
+              className="rounded-lg border border-dashed border-grafite px-4 py-2 font-semibold text-grafite hover:border-marca hover:text-marca"
+            >
+              Mock
+            </button>
+          </form>
+          <Link href="/admin/turmas/nova" className="rounded-lg bg-marca px-4 py-2 font-semibold text-white hover:bg-orange-900">
+            + Nova turma
+          </Link>
+        </div>
       </div>
 
       <div className="mt-8 overflow-x-auto rounded-xl border border-linha bg-white">

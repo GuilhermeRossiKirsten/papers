@@ -22,6 +22,8 @@ export type TurmaDoc = {
   titulo: string;
   descricao: string;
   publicada: boolean;
+  /** Turma de exemplo criada pelo botão "Mock" do admin. */
+  mock?: boolean;
   paper: Paper;
   sessoes: Sessao[];
   criadoEm: Date;

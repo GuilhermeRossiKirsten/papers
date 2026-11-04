@@ -17,6 +17,7 @@ export function toDTO(t: TurmaDoc): TurmaDTO {
     titulo: t.titulo,
     descricao: t.descricao,
     publicada: t.publicada,
+    mock: t.mock ?? false,
     paper: { ...t.paper },
     sessoes: [...t.sessoes]
       .sort((a, b) => a.inicio.getTime() - b.inicio.getTime())
